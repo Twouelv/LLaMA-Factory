@@ -27,6 +27,7 @@ from ...extras.constants import IGNORE_INDEX
 from ...extras.misc import numpify
 from ...extras.packages import is_rouge_available
 
+from llamafactory.eval.custom_poker_metric import compute_poker_metrics
 
 if TYPE_CHECKING:
     from transformers import EvalPrediction, PreTrainedTokenizer
@@ -98,7 +99,10 @@ class ComputeSimilarity:
         if hasattr(self, "score_dict"):
             result = {k: float(np.mean(v)) for k, v in self.score_dict.items()}
 
-        self.score_dict = {"rouge-1": [], "rouge-2": [], "rouge-l": [], "bleu-4": []}
+        self.score_dict = {
+        "rouge-1": [], "rouge-2": [], "rouge-l": [], "bleu-4": [],
+        "poker_custom_accuracy": [], "poker_exact_match": []  
+    }
         return result
 
     def __post_init__(self):
@@ -112,6 +116,10 @@ class ComputeSimilarity:
 
         decoded_preds = self.tokenizer.batch_decode(preds, skip_special_tokens=True)
         decoded_labels = self.tokenizer.batch_decode(labels, skip_special_tokens=True)
+
+        poker_scores = compute_poker_metrics(decoded_preds=decoded_preds, decoded_labels=decoded_labels)
+        self.score_dict["poker_custom_accuracy"].append(round(poker_scores["poker_custom_accuracy"] * 100, 4))
+        self.score_dict["poker_exact_match"].append(round(poker_scores["poker_exact_match"] * 100, 4))
 
         for pred, label in zip(decoded_preds, decoded_labels):
             hypothesis = list(jieba.cut(pred))
