@@ -714,5 +714,13 @@
       "prompt": "content"
     },
     "folder": "python"
+  },
+  "poker_train": {
+    "file_name" : "poker_train.jsonl",
+    "formatting": "alpaca"
+  },
+  "poker_test": {
+    "file_name" : "poker_test.jsonl",
+    "formatting": "alpaca"
   }
 }
