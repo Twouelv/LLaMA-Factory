@@ -18,13 +18,13 @@ dataset_dir: data
 dataset: solver_train
 eval_dataset: solver_test
 template: llama3
-cutoff_len: 160
+cutoff_len: 128
 overwrite_cache: true
 preprocessing_num_workers: 8
 dataloader_num_workers: 4
 
 ### output
-output_dir: /content/drive/MyDrive/PokerBOT/llama3-8b/orpo
+output_dir: /content/drive/MyDrive/PokerBOT/RLHF/orpo
 logging_steps: 50
 save_steps: 500
 plot_loss: true
