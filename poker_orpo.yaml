@@ -1,0 +1,50 @@
+### model
+model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
+adapter_name_or_path: /content/drive/MyDrive/PokerBOT/saves/Llama-3.1-8B-PokerV2/epoch2
+trust_remote_code: true
+
+### method
+stage: dpo
+pref_loss: orpo
+pref_beta: 0.1
+do_train: true
+finetuning_type: lora
+lora_rank: 8
+lora_alpha: 16
+lora_target: all
+
+### dataset
+dataset_dir: data
+dataset: solver_train
+eval_dataset: solver_test
+template: llama3
+cutoff_len: 160
+overwrite_cache: true
+preprocessing_num_workers: 8
+dataloader_num_workers: 4
+
+### output
+output_dir: /content/drive/MyDrive/PokerBOT/llama3-8b/orpo
+logging_steps: 50
+save_steps: 500
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: wandb
+
+### train
+per_device_train_batch_size: 32
+gradient_accumulation_steps: 2
+learning_rate: 2.0e-5
+num_train_epochs: 1
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+quantization_bit: 4
+double_quantization: true
+ddp_timeout: 180000000
+
+### eval
+eval_strategy: steps
+eval_steps: 1000
+per_device_eval_batch_size: 16

@@ -722,5 +722,25 @@
   "poker_test": {
     "file_name" : "poker_test.jsonl",
     "formatting": "alpaca"
+  },
+  "solver_train": {
+    "file_name" : "solver_train.jsonl",
+    "ranking": true,
+    "columns": {
+    "prompt": "instruction",
+    "query": "input",
+    "chosen": "chosen",
+    "rejected": "rejected"
+    }
+  },
+  "solver_test": {
+    "file_name" : "solver_test.jsonl",
+    "ranking": true,
+    "columns": {
+    "prompt": "instruction",
+    "query": "input",
+    "chosen": "chosen",
+    "rejected": "rejected"
   }
+}
 }
